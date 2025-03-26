@@ -1,9 +1,0 @@
-diff a/jdbc.pstgresql.connection/src/mypackage/postgresql/JDBCPostgresql.java b/jdbc.pstgresql.connection/src/mypackage/postgresql/JDBCPostgresql.java	(rejected hunks)
-@@ -11,7 +11,6 @@
- public class JDBCPostgresql {
-     private final String url="jdbc:postgresql://localhost:5432/ University management system";
-     private final String user="postgres";
--    private final String password="0745563712";
-     private final String password="#Toshiro17";
- 
-     private void connect(){
