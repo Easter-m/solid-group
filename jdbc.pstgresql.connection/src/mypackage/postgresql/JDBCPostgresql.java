@@ -1,5 +1,7 @@
 package jdbc.pstgresql.connection.src.mypackage.postgresql;
 
+import jdbc.pstgresql.connection.src.mypackage.postgresql.JDBCPostgresqlConnect;
+
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,13 +11,13 @@ import java.sql.Statement;
 
 
 public class JDBCPostgresql {
+    private final String url="jdbc:postgresql://localhost:5432/ University management system";
+    private final String user="postgres";
+    private final String password="mwangi99";
 
     private void connect(){
         System.out.println("Connecting to database...");
-        String url = "jdbc:postgresql://localhost:5432/Ums";
-        String user = "postgres";
-        String password = "mwangi99";
-        try(Connection conn= DriverManager.getConnection(url, user, password);) {
+        try(Connection conn= DriverManager.getConnection(url,user,password);) {
             if(conn!=null){
                 System.out.println("Connected to server successfully");
             }else {
