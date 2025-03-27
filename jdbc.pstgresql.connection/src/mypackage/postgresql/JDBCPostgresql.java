@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class JDBCPostgresql {
     private final String url="jdbc:postgresql://localhost:5432/ University management system";
     private final String user="postgres";
-    private final String password="mwangi99";
+    private final String password="#Toshiro17";
 
     private void connect(){
         System.out.println("Connecting to database...");
