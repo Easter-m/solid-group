@@ -1,9 +1,14 @@
-package src;
+package userinterface1.src;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 class LoginPage extends JFrame implements ActionListener {
     private Container container;
@@ -14,15 +19,17 @@ class LoginPage extends JFrame implements ActionListener {
     private JCheckBox showPassword;
     private Image backgroundImage;
 
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/University+management+system";
+    private static final String DB_USERNAME = "postgres";
+    private static final String DB_PASSWORD = "0745563712";
+
     public LoginPage() {
         setTitle("Login Page");
         setBounds(300, 90, 900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-
         backgroundImage = new ImageIcon("C:\\Users\\Rue\\Downloads\\uni.jpeg").getImage();
-
 
         JPanel backgroundPanel = new JPanel() {
             @Override
@@ -111,7 +118,7 @@ class LoginPage extends JFrame implements ActionListener {
         if (e.getSource() == loginButton) {
             String userText = userTextField.getText();
             String pwdText = new String(passwordField.getPassword());
-            if (userText.equalsIgnoreCase("admin") && pwdText.equals("admin1234")) {
+            if (validateLogin(userText, pwdText)) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
@@ -132,8 +139,21 @@ class LoginPage extends JFrame implements ActionListener {
         }
     }
 
+    private boolean validateLogin(String username, String password) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String  query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         new LoginPage();
     }
 }
-
